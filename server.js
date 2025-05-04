@@ -85,7 +85,9 @@ app.use('/api/', apiLimiter);
 // MongoDB Connection with retry logic
 const connectDB = async () => {
   try {
+    
     await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: 'portfolio',
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000,
