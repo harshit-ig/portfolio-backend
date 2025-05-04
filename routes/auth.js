@@ -30,8 +30,9 @@ router.post('/login',
           message: 'Invalid Credential' 
         });
       }
-      // Verify password
-      const isMatch = await bcrypt.compare(password, user.password);
+      
+      // Verify password using the model's method
+      const isMatch = await user.comparePassword(password);
       if (!isMatch) {
         return res.status(400).json({ 
           status: 'error',
@@ -104,8 +105,8 @@ router.put('/password',
       const { currentPassword, newPassword } = req.body;
       const user = await User.findById(req.user.id).select('+password');
 
-      // Verify current password
-      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      // Verify current password using the model's method
+      const isMatch = await user.comparePassword(currentPassword);
       if (!isMatch) {
         return res.status(400).json({
           status: 'error',
@@ -113,10 +114,8 @@ router.put('/password',
         });
       }
 
-      // Hash new password
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(newPassword, salt);
-
+      user.password = newPassword;
+      user.passwordChangedAt = Date.now();
       await user.save();
 
       res.json({
