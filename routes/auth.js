@@ -102,7 +102,7 @@ router.put('/password',
   async (req, res) => {
     try {
       const { currentPassword, newPassword } = req.body;
-      const user = await User.findById(req.user.id);
+      const user = await User.findById(req.user.id).select('+password');
 
       // Verify current password
       const isMatch = await bcrypt.compare(currentPassword, user.password);
