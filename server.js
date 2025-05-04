@@ -35,12 +35,15 @@ const corsOptions = {
     // Allow requests with no origin (like mobile apps, curl, postman)
     if (!origin) return callback(null, true);
     
-    // Allow GitHub Pages and localhost
+    // Allow the configured client URL
     const allowedOrigins = [
       process.env.CLIENT_URL, // GitHub Pages: https://harshit-ig.github.io
-      'http://localhost:5173', // Local development
-      'http://127.0.0.1:5173'  // Local development alternative
     ];
+    
+    // Only allow localhost in development mode
+    if (process.env.NODE_ENV === 'development') {
+      allowedOrigins.push('http://localhost:5173', 'http://127.0.0.1:5173');
+    }
     
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
