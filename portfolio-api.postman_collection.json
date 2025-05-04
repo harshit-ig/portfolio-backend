@@ -1,0 +1,240 @@
+{
+  "info": {
+    "name": "Portfolio API",
+    "description": "A collection for testing the Portfolio API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"YourPassword123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "login"]
+            },
+            "description": "Authenticate and get JWT token"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/projects?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "projects"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "featured",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all projects with pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/projects/search?q=react",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "projects", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "react"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Search projects by query"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"New Project\",\n    \"description\": \"This is a test project created through Postman\",\n    \"technologies\": [\"JavaScript\", \"Node.js\", \"Express\"],\n    \"githubUrl\": \"https://github.com/username/project\",\n    \"liveUrl\": \"https://example.com/project\",\n    \"featured\": true,\n    \"order\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "projects"]
+            },
+            "description": "Create a new project (requires authentication)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Project\",\n    \"description\": \"This project has been updated\",\n    \"featured\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/projects/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "projects", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "project_id_here"
+                }
+              ]
+            },
+            "description": "Update a project (requires authentication)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/projects/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "projects", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "project_id_here"
+                }
+              ]
+            },
+            "description": "Delete a project (requires authentication)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Skills",
+      "item": [
+        {
+          "name": "Get All Skills",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/skills",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "skills"]
+            },
+            "description": "Get all skills"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "profile"]
+            },
+            "description": "Get profile information"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    }
+  ]
+} 
