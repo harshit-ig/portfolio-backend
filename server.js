@@ -32,9 +32,6 @@ app.use(helmet());
 // CORS configuration
 const corsOptions = {
   origin: function(origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl, postman)
-    if (!origin) return callback(null, true);
-    console.log("Current NODE_ENV:", process.env.NODE_ENV);
     // In development mode, allow all origins
     if (process.env.NODE_ENV === 'development') {
       return callback(null, true);
